@@ -5,7 +5,7 @@
 #include "esp_err.h"
 #include "driver/gpio.h"
 
-#include "led.h"
+#include "include/led.h"
 
 #define LED 2
 
@@ -17,14 +17,13 @@ void gpioSetLed()
     esp_rom_gpio_pad_select_gpio(LED);
     gpio_set_direction(LED, GPIO_MODE_OUTPUT);
 
-    // TO DO - Ligar o led conforme o estado
+    // TO DO - Ligar o led conforme o valor no dash!
     // gpio_set_level(LED, estado);
 }
 
 void ledPWM()
 {
-    printf("Intensidade: %lf\n", intensity);
-    intensity = (int)255 * (intensity / 100);
+    int pwmIntensity = (int)255 * (intensity / 100);
 
     // Configuração do Timer
     ledc_timer_config_t timer_config = {
@@ -45,15 +44,6 @@ void ledPWM()
         .hpoint = 0};
     ledc_channel_config(&channel_config);
 
-    // Utilizando o PWM
-
-    ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, intensity);
+    ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, pwmIntensity);
     ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
-
-    // ledc_fade_func_install(0);
-    // while (true)
-    // {
-    //     ledc_set_fade_time_and_start(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 0, 1000, LEDC_FADE_WAIT_DONE);
-    //     ledc_set_fade_time_and_start(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 255, 1000, LEDC_FADE_WAIT_DONE);
-    // }
 }

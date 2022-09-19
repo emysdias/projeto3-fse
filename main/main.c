@@ -6,9 +6,9 @@
 #include "esp_log.h"
 #include "freertos/semphr.h"
 
-#include "wifi/wifi.h"
-#include "mqtt/mqtt.h"
-#include "gpio/led.h"
+#include "wifi/include/wifi.h"
+#include "mqtt/include/mqtt.h"
+#include "gpio/include/led.h"
 
 SemaphoreHandle_t conexaoWifiSemaphore;
 SemaphoreHandle_t conexaoMQTTSemaphore;
