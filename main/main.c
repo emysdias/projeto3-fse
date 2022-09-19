@@ -8,6 +8,7 @@
 
 #include "wifi/wifi.h"
 #include "mqtt/mqtt.h"
+#include "gpio/led.h"
 
 SemaphoreHandle_t conexaoWifiSemaphore;
 SemaphoreHandle_t conexaoMQTTSemaphore;
@@ -43,6 +44,18 @@ void trataComunicacaoComServidor(void *params)
     }
 }
 
+void ledHandle(void *params)
+{
+    if (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
+    {
+        while (true)
+        {
+            ledPWM();
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+        }
+    }
+}
+
 void app_main(void)
 {
     // Inicializa o NVS
@@ -57,7 +70,9 @@ void app_main(void)
     conexaoWifiSemaphore = xSemaphoreCreateBinary();
     conexaoMQTTSemaphore = xSemaphoreCreateBinary();
     wifi_start();
+    gpioSetLed();
 
     xTaskCreate(&conectadoWifi, "Conexão ao MQTT", 4096, NULL, 1, NULL);
-    xTaskCreate(&trataComunicacaoComServidor, "Comunicação com Broker", 4096, NULL, 1, NULL);
+    // xTaskCreate(&trataComunicacaoComServidor, "Comunicação com Broker", 4096, NULL, 1, NULL);
+    xTaskCreate(&ledHandle, "Configurando Led", 4096, NULL, 1, NULL);
 }
