@@ -1,0 +1,37 @@
+[0/1] Re-running CMake...
+-- Project is not inside a git repository, or git repository has no commits; will not use 'git describe' to determine PROJECT_VER.
+-- Building ESP-IDF components for target esp32
+-- Project sdkconfig file /Users/vitorlamego/esp/Trabalho_Final/sdkconfig
+-- App "Trabalho_Final" version: 1
+-- Adding linker script /Users/vitorlamego/esp/Trabalho_Final/build/esp-idf/esp_system/ld/memory.ld
+-- Adding linker script /Users/vitorlamego/esp/esp-idf/components/esp_system/ld/esp32/sections.ld.in
+-- Adding linker script /Users/vitorlamego/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.ld
+-- Adding linker script /Users/vitorlamego/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.api.ld
+-- Adding linker script /Users/vitorlamego/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld
+-- Adding linker script /Users/vitorlamego/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-data.ld
+-- Adding linker script /Users/vitorlamego/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.syscalls.ld
+-- Adding linker script /Users/vitorlamego/esp/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-funcs.ld
+-- Adding linker script /Users/vitorlamego/esp/esp-idf/components/soc/esp32/ld/esp32.peripherals.ld
+-- Components: app_trace app_update bootloader bootloader_support bt cmock console cxx driver efuse esp-tls esp_adc esp_app_format esp_common esp_eth esp_event esp_gdbstub esp_hid esp_http_client esp_http_server esp_https_ota esp_https_server esp_hw_support esp_lcd esp_local_ctrl esp_netif esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_serial_slave_link esp_system esp_timer esp_wifi espcoredump esptool_py fatfs freertos hal heap http_parser idf_test ieee802154 json log lwip main mbedtls mqtt newlib nvs_flash openthread partition_table perfmon protobuf-c protocomm pthread sdmmc soc spi_flash spiffs tcp_transport tinyusb ulp unity usb vfs wear_levelling wifi_provisioning wpa_supplicant xtensa
+-- Component paths: /Users/vitorlamego/esp/esp-idf/components/app_trace /Users/vitorlamego/esp/esp-idf/components/app_update /Users/vitorlamego/esp/esp-idf/components/bootloader /Users/vitorlamego/esp/esp-idf/components/bootloader_support /Users/vitorlamego/esp/esp-idf/components/bt /Users/vitorlamego/esp/esp-idf/components/cmock /Users/vitorlamego/esp/esp-idf/components/console /Users/vitorlamego/esp/esp-idf/components/cxx /Users/vitorlamego/esp/esp-idf/components/driver /Users/vitorlamego/esp/esp-idf/components/efuse /Users/vitorlamego/esp/esp-idf/components/esp-tls /Users/vitorlamego/esp/esp-idf/components/esp_adc /Users/vitorlamego/esp/esp-idf/components/esp_app_format /Users/vitorlamego/esp/esp-idf/components/esp_common /Users/vitorlamego/esp/esp-idf/components/esp_eth /Users/vitorlamego/esp/esp-idf/components/esp_event /Users/vitorlamego/esp/esp-idf/components/esp_gdbstub /Users/vitorlamego/esp/esp-idf/components/esp_hid /Users/vitorlamego/esp/esp-idf/components/esp_http_client /Users/vitorlamego/esp/esp-idf/components/esp_http_server /Users/vitorlamego/esp/esp-idf/components/esp_https_ota /Users/vitorlamego/esp/esp-idf/components/esp_https_server /Users/vitorlamego/esp/esp-idf/components/esp_hw_support /Users/vitorlamego/esp/esp-idf/components/esp_lcd /Users/vitorlamego/esp/esp-idf/components/esp_local_ctrl /Users/vitorlamego/esp/esp-idf/components/esp_netif /Users/vitorlamego/esp/esp-idf/components/esp_phy /Users/vitorlamego/esp/esp-idf/components/esp_pm /Users/vitorlamego/esp/esp-idf/components/esp_psram /Users/vitorlamego/esp/esp-idf/components/esp_ringbuf /Users/vitorlamego/esp/esp-idf/components/esp_rom /Users/vitorlamego/esp/esp-idf/components/esp_serial_slave_link /Users/vitorlamego/esp/esp-idf/components/esp_system /Users/vitorlamego/esp/esp-idf/components/esp_timer /Users/vitorlamego/esp/esp-idf/components/esp_wifi /Users/vitorlamego/esp/esp-idf/components/espcoredump /Users/vitorlamego/esp/esp-idf/components/esptool_py /Users/vitorlamego/esp/esp-idf/components/fatfs /Users/vitorlamego/esp/esp-idf/components/freertos /Users/vitorlamego/esp/esp-idf/components/hal /Users/vitorlamego/esp/esp-idf/components/heap /Users/vitorlamego/esp/esp-idf/components/http_parser /Users/vitorlamego/esp/esp-idf/components/idf_test /Users/vitorlamego/esp/esp-idf/components/ieee802154 /Users/vitorlamego/esp/esp-idf/components/json /Users/vitorlamego/esp/esp-idf/components/log /Users/vitorlamego/esp/esp-idf/components/lwip /Users/vitorlamego/esp/Trabalho_Final/main /Users/vitorlamego/esp/esp-idf/components/mbedtls /Users/vitorlamego/esp/esp-idf/components/mqtt /Users/vitorlamego/esp/esp-idf/components/newlib /Users/vitorlamego/esp/esp-idf/components/nvs_flash /Users/vitorlamego/esp/esp-idf/components/openthread /Users/vitorlamego/esp/esp-idf/components/partition_table /Users/vitorlamego/esp/esp-idf/components/perfmon /Users/vitorlamego/esp/esp-idf/components/protobuf-c /Users/vitorlamego/esp/esp-idf/components/protocomm /Users/vitorlamego/esp/esp-idf/components/pthread /Users/vitorlamego/esp/esp-idf/components/sdmmc /Users/vitorlamego/esp/esp-idf/components/soc /Users/vitorlamego/esp/esp-idf/components/spi_flash /Users/vitorlamego/esp/esp-idf/components/spiffs /Users/vitorlamego/esp/esp-idf/components/tcp_transport /Users/vitorlamego/esp/esp-idf/components/tinyusb /Users/vitorlamego/esp/esp-idf/components/ulp /Users/vitorlamego/esp/esp-idf/components/unity /Users/vitorlamego/esp/esp-idf/components/usb /Users/vitorlamego/esp/esp-idf/components/vfs /Users/vitorlamego/esp/esp-idf/components/wear_levelling /Users/vitorlamego/esp/esp-idf/components/wifi_provisioning /Users/vitorlamego/esp/esp-idf/components/wpa_supplicant /Users/vitorlamego/esp/esp-idf/components/xtensa
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/vitorlamego/esp/Trabalho_Final/build
+[1/12] Performing build step for 'bootloader'
+[1/1] cd /Users/vitorlamego/esp/Trabalho_Final/build/bootloader/esp-idf/esptool_py && /Users/vitorlamego/.espressif/python_env/idf5.1_py3.8_env/bin/python /Users/vitorlamego/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 /Users/vitorlamego/esp/Trabalho_Final/build/bootloader/bootloader.bin
+Bootloader binary size 0x66c0 bytes. 0x940 bytes (8%) free.
+[2/10] Building C object esp-idf/esp_app_format/CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj
+[3/10] Linking C static library esp-idf/esp_app_format/libesp_app_format.a
+[4/10] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj
+[5/10] Linking C static library esp-idf/main/libmain.a
+[6/10] Generating ld/sections.ld
+[7/10] Building C object CMakeFiles/Trabalho_Final.elf.dir/project_elf_src_esp32.c.obj
+[8/10] Linking CXX executable Trabalho_Final.elf
+[9/10] Generating binary image from built executable
+esptool.py v4.3
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated /Users/vitorlamego/esp/Trabalho_Final/build/Trabalho_Final.bin
+[10/10] cd /Users/vitorlamego/esp/Trabalho_Final/build/esp-idf/esptool_py && /Users/vitorlamego/.espressif/python_env/idf5.1_py3.8_env/bin/python /Users/vitorlamego/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /Users/vitorlamego/esp/Trabalho_Final/build/partition_table/partition-table.bin /Users/vitorlamego/esp/Trabalho_Final/build/Trabalho_Final.bin
+Trabalho_Final.bin binary size 0x2ae10 bytes. Smallest app partition is 0x100000 bytes. 0xd51f0 bytes (83%) free.

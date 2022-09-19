@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "sdkconfig.h": "c",
+        "http_client.h": "c",
+        "esp_event.h": "c"
+    },
+    "idf.adapterTargetName": "esp32",
+}
