@@ -5,10 +5,13 @@
 #include "esp_http_client.h"
 #include "esp_log.h"
 #include "freertos/semphr.h"
+#include "driver/gpio.h"
 
 #include "wifi/include/wifi.h"
 #include "mqtt/include/mqtt.h"
 #include "gpio/include/led.h"
+#include "dht11/include/sensor_read.h"
+#include "ky-036/include/ky-036.h"
 
 SemaphoreHandle_t conexaoWifiSemaphore;
 SemaphoreHandle_t conexaoMQTTSemaphore;
@@ -31,15 +34,16 @@ void trataComunicacaoComServidor(void *params)
     char JsonAtributos[200];
     if (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
     {
+
         while (true)
         {
-            float temperatura = 20.0 + (float)rand() / (float)(RAND_MAX / 10.0);
-            sprintf(mensagem, "{\"temperature\": %f}", temperatura);
+            readTempAndUmid();
+            sprintf(mensagem, "{\"temperature\": %d}", temperature);
             mqtt_envia_mensagem("v1/devices/me/telemetry", mensagem);
 
-            sprintf(JsonAtributos, "{\"quantidade de pinos\": 5,\n\"umidade\": 20}");
+            sprintf(JsonAtributos, "{\"quantidade de pinos\": 5,\n\"umidade\": %d}", humidity);
             mqtt_envia_mensagem("v1/devices/me/attributes", JsonAtributos);
-            vTaskDelay(3000 / portTICK_PERIOD_MS);
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
         }
     }
 }
@@ -51,6 +55,19 @@ void ledHandle(void *params)
         while (true)
         {
             ledPWM();
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+        }
+    }
+}
+
+void touchHandle(void *params)
+{
+
+    if (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
+    {
+        while (true)
+        {
+            touchRead();
             vTaskDelay(1000 / portTICK_PERIOD_MS);
         }
     }
@@ -74,5 +91,6 @@ void app_main(void)
 
     xTaskCreate(&conectadoWifi, "Conexão ao MQTT", 4096, NULL, 1, NULL);
     // xTaskCreate(&trataComunicacaoComServidor, "Comunicação com Broker", 4096, NULL, 1, NULL);
-    xTaskCreate(&ledHandle, "Configurando Led", 4096, NULL, 1, NULL);
+    // xTaskCreate(&ledHandle, "Configurando Led", 4096, NULL, 1, NULL);
+    xTaskCreate(&touchHandle, "Configurando Led", 4096, NULL, 1, NULL);
 }
