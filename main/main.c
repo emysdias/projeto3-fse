@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <pthread.h>
+
 #include "nvs_flash.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
@@ -12,6 +14,7 @@
 #include "gpio/include/led.h"
 #include "dht11/include/sensor_read.h"
 #include "ky-036/include/ky-036.h"
+#include "ky-003/include/ky-003.h"
 
 SemaphoreHandle_t conexaoWifiSemaphore;
 SemaphoreHandle_t conexaoMQTTSemaphore;
@@ -22,17 +25,16 @@ void conectadoWifi(void *params)
     {
         if (xSemaphoreTake(conexaoWifiSemaphore, portMAX_DELAY))
         {
-            // Processamento Internet
             mqtt_start();
         }
     }
 }
 
-void trataComunicacaoComServidor(void *params)
+void tempUmidData(void *params)
 {
     char mensagem[50];
     char JsonAtributos[200];
-    if (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
+    while (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
     {
 
         while (true)
@@ -41,7 +43,7 @@ void trataComunicacaoComServidor(void *params)
             sprintf(mensagem, "{\"temperature\": %d}", temperature);
             mqtt_envia_mensagem("v1/devices/me/telemetry", mensagem);
 
-            sprintf(JsonAtributos, "{\"quantidade de pinos\": 5,\n\"umidade\": %d}", humidity);
+            sprintf(JsonAtributos, "{\"umidade\": %d}", humidity);
             mqtt_envia_mensagem("v1/devices/me/attributes", JsonAtributos);
             vTaskDelay(1000 / portTICK_PERIOD_MS);
         }
@@ -50,27 +52,57 @@ void trataComunicacaoComServidor(void *params)
 
 void ledHandle(void *params)
 {
-    if (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
+
+    while (true)
     {
-        while (true)
-        {
-            ledPWM();
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
-        }
+        ledPWM();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
 void touchHandle(void *params)
 {
 
-    if (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
+    while (true)
     {
-        while (true)
-        {
-            touchRead();
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
-        }
+        touchRead();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
+}
+
+void digitalHallHandle(void *params)
+{
+
+    while (true)
+    {
+        proximityHallRead();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+
+void mqttTask(void *params)
+{
+    xTaskCreate(&conectadoWifi, "Conexão ao MQTT", 4096, NULL, 1, NULL);
+}
+
+void dht11Task(void *params)
+{
+    xTaskCreate(&tempUmidData, "Comunicação com Broker", 4096, NULL, 1, NULL);
+}
+
+void ledPWMTask(void *params)
+{
+    xTaskCreate(&ledHandle, "Configurando Led", 4096, NULL, 1, NULL);
+}
+
+void ky036Task(void *params)
+{
+    xTaskCreate(&touchHandle, "Sensor de Toque", 4096, NULL, 1, NULL);
+}
+
+void ky003Task(void *params)
+{
+    xTaskCreate(&digitalHallHandle, "Sensor Hall", 4096, NULL, 1, NULL);
 }
 
 void app_main(void)
@@ -89,8 +121,17 @@ void app_main(void)
     wifi_start();
     gpioSetLed();
 
-    xTaskCreate(&conectadoWifi, "Conexão ao MQTT", 4096, NULL, 1, NULL);
-    // xTaskCreate(&trataComunicacaoComServidor, "Comunicação com Broker", 4096, NULL, 1, NULL);
-    // xTaskCreate(&ledHandle, "Configurando Led", 4096, NULL, 1, NULL);
-    xTaskCreate(&touchHandle, "Configurando Led", 4096, NULL, 1, NULL);
+    pthread_t tid[5];
+
+    pthread_create(&tid[0], NULL, (void *)mqttTask, (void *)NULL);
+    pthread_create(&tid[1], NULL, (void *)dht11Task, (void *)NULL);
+    pthread_create(&tid[2], NULL, (void *)ledPWMTask, (void *)NULL);
+    pthread_create(&tid[3], NULL, (void *)ky036Task, (void *)NULL);
+    // pthread_create(&tid[4], NULL, (void *)ky003Task, (void *)NULL);
+
+    pthread_join(tid[0], NULL);
+    pthread_join(tid[1], NULL);
+    pthread_join(tid[2], NULL);
+    // pthread_join(tid[3], NULL);
+    pthread_join(tid[4], NULL);
 }

@@ -14,11 +14,13 @@ void readTempAndUmid()
 
     struct dht11_reading data_read = DHT11_read();
 
-    temperature = data_read.temperature;
-    humidity = data_read.humidity;
-
     if (data_read.status != 0)
     {
         printf("Problema com a leitura do DHT11\n");
+    }
+    else
+    {
+        temperature = data_read.temperature;
+        humidity = data_read.humidity;
     }
 }

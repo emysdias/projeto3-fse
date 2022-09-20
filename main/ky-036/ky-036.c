@@ -9,14 +9,15 @@ void touchRead()
 {
     const int pinoSensor = 4; // PINO DIGITAL UTILIZADO PELO SENSOR:  "D4" - ESP32
     char mensagem[50];
-    gpio_set_direction(pinoSensor, GPIO_MODE_INPUT); // DEFINE O PINO COMO ENTRADA
+    gpio_set_direction(pinoSensor, GPIO_MODE_INPUT);
     touch = gpio_get_level(pinoSensor);
+    printf("Touch: %d\n", touch);
     if (touch == 1)
     {
         printf("Sensor ligado!\n");
     }
     else
-    { // SENÃO, FAZ
+    {
         printf("Sensor desligado\n");
     }
     sprintf(mensagem, "{\"touch\": %d}", touch);

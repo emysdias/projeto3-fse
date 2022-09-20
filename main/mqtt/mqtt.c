@@ -29,18 +29,6 @@ esp_mqtt_client_handle_t client;
 
 extern SemaphoreHandle_t conexaoMQTTSemaphore;
 
-// void testParser(char *jsonString, int dataLen)
-// {
-//     cJSON *root = cJSON_Parse(jsonString);
-//     char *method = cJSON_GetObjectItem(root, "method")->valuestring;
-//     double intensidade = cJSON_GetObjectItem(root, "params")->valuedouble;
-
-//     intensity = intensidade;
-
-//     printf("Metodo recebido: %s\n", method);
-//     printf("Intensidade setada %lf\n", intensity);
-// }
-
 static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
 {
     esp_mqtt_client_handle_t client = event->client;
