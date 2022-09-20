@@ -307,12 +307,18 @@ CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
 
 #
-# Configuração do Wifi Configuration
+# Configuração do Wifi
 #
-CONFIG_ESP_WIFI_SSID="TP-LINK-FSE"
-CONFIG_ESP_WIFI_PASSWORD="50216468"
+CONFIG_ESP_WIFI_SSID="MARTE"
+CONFIG_ESP_WIFI_PASSWORD="marte2021@"
 CONFIG_ESP_MAXIMUM_RETRY=5
-# end of Configuração do Wifi Configuration
+# end of Configuração do Wifi
+
+#
+# Low Power Mode
+#
+CONFIG_ESP_LOW_POWER=1
+# end of Low Power Mode
 
 #
 # Example Connection Configuration

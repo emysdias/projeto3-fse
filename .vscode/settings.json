@@ -9,7 +9,9 @@
         "dht11.h": "c",
         "led.h": "c",
         "mqtt.h": "c",
-        "ky-036.h": "c"
+        "ky-036.h": "c",
+        "ky-003.h": "c",
+        "rtc_io.h": "c"
     },
     "idf.adapterTargetName": "esp32",
     "C_Cpp.intelliSenseEngine": "Tag Parser"

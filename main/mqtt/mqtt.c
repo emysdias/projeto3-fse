@@ -22,6 +22,7 @@
 #include "../parser/include/cJSON.h"
 #include "../parser/include/parser.h"
 #include "../gpio/include/led.h"
+#include "../light-sleep/include/light-sleep.h"
 
 #define TAG "MQTT"
 
@@ -39,7 +40,8 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
     case MQTT_EVENT_CONNECTED:
         ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
         msg_id = esp_mqtt_client_subscribe(client, "v1/devices/me/rpc/request/+", 0);
-        xSemaphoreGive(conexaoMQTTSemaphore);
+        if (!LOW_POWER)
+            xSemaphoreGive(conexaoMQTTSemaphore);
         break;
     case MQTT_EVENT_DISCONNECTED:
         ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");

@@ -3,5 +3,6 @@
 
 void touchRead();
 extern int touch;
+#define TOUCH_GPIO 27 // PINO DIGITAL UTILIZADO PELO SENSOR:  "D4" - ESP32
 
 #endif

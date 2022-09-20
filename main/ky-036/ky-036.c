@@ -7,10 +7,9 @@ int touch = 0;
 
 void touchRead()
 {
-    const int pinoSensor = 4; // PINO DIGITAL UTILIZADO PELO SENSOR:  "D4" - ESP32
     char mensagem[50];
-    gpio_set_direction(pinoSensor, GPIO_MODE_INPUT);
-    touch = gpio_get_level(pinoSensor);
+    gpio_set_direction(TOUCH_GPIO, GPIO_MODE_INPUT);
+    touch = gpio_get_level(TOUCH_GPIO);
     printf("Touch: %d\n", touch);
     if (touch == 1)
     {

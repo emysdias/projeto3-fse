@@ -15,6 +15,7 @@
 #include "dht11/include/sensor_read.h"
 #include "ky-036/include/ky-036.h"
 #include "ky-003/include/ky-003.h"
+#include "light-sleep/include/light-sleep.h"
 
 SemaphoreHandle_t conexaoWifiSemaphore;
 SemaphoreHandle_t conexaoMQTTSemaphore;
@@ -52,7 +53,6 @@ void tempUmidData(void *params)
 
 void ledHandle(void *params)
 {
-
     while (true)
     {
         ledPWM();
@@ -105,6 +105,28 @@ void ky003Task(void *params)
     xTaskCreate(&digitalHallHandle, "Sensor Hall", 4096, NULL, 1, NULL);
 }
 
+void energyMode()
+{
+    conexaoWifiSemaphore = xSemaphoreCreateBinary();
+    conexaoMQTTSemaphore = xSemaphoreCreateBinary();
+    wifi_start();
+    gpioSetLed();
+
+    pthread_t tid[5];
+
+    pthread_create(&tid[0], NULL, (void *)mqttTask, (void *)NULL);
+    // pthread_create(&tid[1], NULL, (void *)dht11Task, (void *)NULL);
+    pthread_create(&tid[2], NULL, (void *)ledPWMTask, (void *)NULL);
+    pthread_create(&tid[3], NULL, (void *)ky036Task, (void *)NULL);
+    pthread_create(&tid[4], NULL, (void *)ky003Task, (void *)NULL);
+
+    pthread_join(tid[0], NULL);
+    // pthread_join(tid[1], NULL);
+    pthread_join(tid[2], NULL);
+    pthread_join(tid[3], NULL);
+    pthread_join(tid[4], NULL);
+}
+
 void app_main(void)
 {
     // Inicializa o NVS
@@ -116,22 +138,12 @@ void app_main(void)
     }
     ESP_ERROR_CHECK(ret);
 
-    conexaoWifiSemaphore = xSemaphoreCreateBinary();
-    conexaoMQTTSemaphore = xSemaphoreCreateBinary();
-    wifi_start();
-    gpioSetLed();
-
-    pthread_t tid[5];
-
-    pthread_create(&tid[0], NULL, (void *)mqttTask, (void *)NULL);
-    pthread_create(&tid[1], NULL, (void *)dht11Task, (void *)NULL);
-    pthread_create(&tid[2], NULL, (void *)ledPWMTask, (void *)NULL);
-    pthread_create(&tid[3], NULL, (void *)ky036Task, (void *)NULL);
-    // pthread_create(&tid[4], NULL, (void *)ky003Task, (void *)NULL);
-
-    pthread_join(tid[0], NULL);
-    pthread_join(tid[1], NULL);
-    pthread_join(tid[2], NULL);
-    // pthread_join(tid[3], NULL);
-    pthread_join(tid[4], NULL);
+    if (LOW_POWER)
+    {
+        batteryMode();
+    }
+    else
+    {
+        energyMode();
+    }
 }

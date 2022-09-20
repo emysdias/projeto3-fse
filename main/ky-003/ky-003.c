@@ -7,10 +7,9 @@ int magnetic = 0;
 
 void proximityHallRead()
 {
-    const int pinoSensor = 36; // PINO DIGITAL UTILIZADO PELO SENSOR:  "TX2" - ESP32
     char mensagem[50];
-    gpio_set_direction(pinoSensor, GPIO_MODE_INPUT); // DEFINE O PINO COMO ENTRADA
-    magnetic = gpio_get_level(pinoSensor);
+    gpio_set_direction(HALL_GPIO, GPIO_MODE_INPUT); // DEFINE O PINO COMO ENTRADA
+    magnetic = gpio_get_level(HALL_GPIO);
     printf("Magnetic: %d\n", magnetic);
     if (magnetic == 0)
     {
