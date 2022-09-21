@@ -1,53 +1,74 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-S2 | ESP32-S3 |
-| ----------------- | ----- | -------- | -------- | -------- | -------- |
+# Controlador de Sensores Distribuídos
 
-# Hello World Example
+Trabalho 3 referente à disciplina de Sistemas Embarcados da Universidade de Brasília
 
-Starts a FreeRTOS task to print "Hello World".
+## Participantes
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
-
-## How to use example
-
-Follow detailed instructions provided specifically for this example. 
-
-Select the instructions depending on Espressif chip installed on your development board:
-
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
+- [Emily Dias](https://github.com/emysdias) - 180015966
+- [Vitor Lamego](https://github.com/VitorLamego) - 190020903
 
 
-## Example folder contents
+## Execução
 
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
+O projeto foi realizado utilizando o framework do Espressif, os passos iniciais de configuração foram realizados utilizando esta [documentação](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html). A versão utilizada foi ESP-IDF v5.1-dev-776-g5b39159e66.
 
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both). 
-
-Below is short explanation of remaining files in the project folder.
+Com a esp-idf instalada na máquina, rode os seguintes comandos para executar o programa:
 
 ```
-├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
-├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+. $HOME/esp/esp-idf/export.sh
+OBS: Se a pasta "esp" não estiver na HOME, coloque o caminho onde foi clonado o código da esp-idf!
 ```
 
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
+```
+idf.py build
+```
 
-## Troubleshooting
+```
+idf.py menuconfig
 
-* Program upload failure
+No menu "Configurações do Wifi" coloque a sua rede Wifi Local, preenchendo o ssid e a senha.
+```
 
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
+```
+idf.py -p /dev/[tty.usbserial-0001] flash monitor
 
-## Technical support and feedback
+No meu caso a esp conectada aparecia como tty.usbserial-0001, mas isso pode ser diferente, para verificar rode o comando:
 
-Please use the following feedback channels:
+ls /dev/
+```
 
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
+Pronto! O seu programa será executado.
 
-We will get back to you as soon as possible.
+## Light-Sleep Mode
+
+O programa também pode ser executado em modo Light-Sleep, assim fica dormindo até que um dos sensores a acorde. Para executar o programa nesse modo, rode o seguinte comando:
+
+```
+idf.py menuconfig
+
+No menu Low Power Mode digite 1 para ligar o modo ou deixe em 0 para deixar desligado
+```
+
+Basta rodar os comandos comentados anteriormente e o seu programa será executado em Light-Sleep.
+
+
+## Sensores utilizados
+
+
+### DHT11
+
+<img src="/images/dht11.jpeg" alt="drawing" width="350"/>
+
+Sensor para leitura de temperatura e umidade.
+
+### KY-003
+
+<img src="/images/ky003.jpeg" alt="drawing" width="350"/>
+
+Sensor Hall Magnético Digital para leitura de presença de campo magnético.
+
+### KY-036
+
+<img src="/images/ky036.jpeg" alt="drawing" width="350"/>
+
+Sensor de toque
