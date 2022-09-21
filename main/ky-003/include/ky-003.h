@@ -3,7 +3,7 @@
 
 void proximityHallRead();
 void digitalHallHandle();
-#define HALL_GPIO 36 // PINO DIGITAL UTILIZADO PELO SENSOR:  "TX2" - ESP32
+#define HALL_GPIO 36
 extern int magnetic;
 
 #endif
