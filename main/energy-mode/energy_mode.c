@@ -49,13 +49,13 @@ void energyMode()
     pthread_t tid[5];
 
     pthread_create(&tid[0], NULL, (void *)mqttTask, (void *)NULL);
-    // pthread_create(&tid[1], NULL, (void *)dht11Task, (void *)NULL);
+    pthread_create(&tid[1], NULL, (void *)dht11Task, (void *)NULL);
     pthread_create(&tid[2], NULL, (void *)ledPWMTask, (void *)NULL);
     pthread_create(&tid[3], NULL, (void *)ky036Task, (void *)NULL);
     pthread_create(&tid[4], NULL, (void *)ky003Task, (void *)NULL);
 
     pthread_join(tid[0], NULL);
-    // pthread_join(tid[1], NULL);
+    pthread_join(tid[1], NULL);
     pthread_join(tid[2], NULL);
     pthread_join(tid[3], NULL);
     pthread_join(tid[4], NULL);
