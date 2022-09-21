@@ -20,66 +20,6 @@
 SemaphoreHandle_t conexaoWifiSemaphore;
 SemaphoreHandle_t conexaoMQTTSemaphore;
 
-void conectadoWifi(void *params)
-{
-    while (true)
-    {
-        if (xSemaphoreTake(conexaoWifiSemaphore, portMAX_DELAY))
-        {
-            mqtt_start();
-        }
-    }
-}
-
-void tempUmidData(void *params)
-{
-    char mensagem[50];
-    char JsonAtributos[200];
-    while (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
-    {
-
-        while (true)
-        {
-            readTempAndUmid();
-            sprintf(mensagem, "{\"temperature\": %d}", temperature);
-            mqtt_envia_mensagem("v1/devices/me/telemetry", mensagem);
-
-            sprintf(JsonAtributos, "{\"umidade\": %d}", humidity);
-            mqtt_envia_mensagem("v1/devices/me/attributes", JsonAtributos);
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
-        }
-    }
-}
-
-void ledHandle(void *params)
-{
-    while (true)
-    {
-        ledPWM();
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-    }
-}
-
-void touchHandle(void *params)
-{
-
-    while (true)
-    {
-        touchRead();
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-    }
-}
-
-void digitalHallHandle(void *params)
-{
-
-    while (true)
-    {
-        proximityHallRead();
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-    }
-}
-
 void mqttTask(void *params)
 {
     xTaskCreate(&conectadoWifi, "Conexão ao MQTT", 4096, NULL, 1, NULL);

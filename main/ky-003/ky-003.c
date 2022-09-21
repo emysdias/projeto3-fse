@@ -2,6 +2,8 @@
 #include "include/ky-003.h"
 #include "driver/gpio.h"
 #include "../mqtt/include/mqtt.h"
+#include "esp_event.h"
+#include "freertos/semphr.h"
 
 int magnetic = 0;
 
@@ -21,4 +23,14 @@ void proximityHallRead()
     }
     sprintf(mensagem, "{\"magnetic\": %d}", !magnetic);
     mqtt_envia_mensagem("v1/devices/me/attributes", mensagem);
+}
+
+void digitalHallHandle(void *params)
+{
+
+    while (true)
+    {
+        proximityHallRead();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
 }

@@ -3,5 +3,6 @@
 
 void wifi_start();
 void wifi_stop();
+void conectadoWifi(void *);
 
 #endif

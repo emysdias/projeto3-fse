@@ -3,6 +3,7 @@
 
 void gpioSetLed();
 void ledPWM();
+void ledHandle(void *);
 extern double intensity;
 
 #endif

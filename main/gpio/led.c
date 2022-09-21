@@ -44,3 +44,12 @@ void ledPWM()
     ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, pwmIntensity);
     ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
 }
+
+void ledHandle(void *params)
+{
+    while (true)
+    {
+        ledPWM();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}

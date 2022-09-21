@@ -3,10 +3,16 @@
 #include "driver/gpio.h"
 #include "sdkconfig.h"
 
+#include "freertos/semphr.h"
+#include "freertos/queue.h"
+
 #include "include/dht11.h"
+#include "../mqtt/include/mqtt.h"
 
 int temperature = 0;
 int humidity = 0;
+
+extern SemaphoreHandle_t conexaoMQTTSemaphore;
 
 void readTempAndUmid()
 {
@@ -22,5 +28,25 @@ void readTempAndUmid()
     {
         temperature = data_read.temperature;
         humidity = data_read.humidity;
+    }
+}
+
+void tempUmidData(void *params)
+{
+    char mensagem[50];
+    char JsonAtributos[200];
+    while (xSemaphoreTake(conexaoMQTTSemaphore, portMAX_DELAY))
+    {
+
+        while (true)
+        {
+            readTempAndUmid();
+            sprintf(mensagem, "{\"temperature\": %d}", temperature);
+            mqtt_envia_mensagem("v1/devices/me/telemetry", mensagem);
+
+            sprintf(JsonAtributos, "{\"umidade\": %d}", humidity);
+            mqtt_envia_mensagem("v1/devices/me/attributes", JsonAtributos);
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+        }
     }
 }

@@ -1,5 +1,6 @@
 #include "include/wifi.h"
 #include "../light-sleep/include/light-sleep.h"
+#include "../mqtt/include/mqtt.h"
 
 #include <string.h>
 #include "freertos/FreeRTOS.h"
@@ -28,6 +29,17 @@ static EventGroupHandle_t s_wifi_event_group;
 
 static int s_retry_num = 0;
 extern SemaphoreHandle_t conexaoWifiSemaphore;
+
+void conectadoWifi(void *params)
+{
+    while (true)
+    {
+        if (xSemaphoreTake(conexaoWifiSemaphore, portMAX_DELAY))
+        {
+            mqtt_start();
+        }
+    }
+}
 
 static void event_handler(void *arg, esp_event_base_t event_base,
                           int32_t event_id, void *event_data)

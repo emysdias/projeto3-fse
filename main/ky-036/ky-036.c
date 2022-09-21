@@ -2,6 +2,8 @@
 #include "include/ky-036.h"
 #include "driver/gpio.h"
 #include "../mqtt/include/mqtt.h"
+#include "esp_event.h"
+#include "freertos/semphr.h"
 
 int touch = 0;
 
@@ -21,4 +23,14 @@ void touchRead()
     }
     sprintf(mensagem, "{\"touch\": %d}", touch);
     mqtt_envia_mensagem("v1/devices/me/attributes", mensagem);
+}
+
+void touchHandle(void *params)
+{
+
+    while (true)
+    {
+        touchRead();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
 }
