@@ -14,7 +14,7 @@ void readTempAndUmid()
 
     struct dht11_reading data_read = DHT11_read();
 
-    if (data_read.status != 0 || data_read.temperature <= 0)
+    if (data_read.status != 0 || data_read.temperature <= 0 || data_read.temperature > 100)
     {
         printf("Problema com a leitura do DHT11\n");
     }

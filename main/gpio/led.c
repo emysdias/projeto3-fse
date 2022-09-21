@@ -16,9 +16,6 @@ void gpioSetLed()
 {
     esp_rom_gpio_pad_select_gpio(LED);
     gpio_set_direction(LED, GPIO_MODE_OUTPUT);
-
-    // TO DO - Ligar o led conforme o valor no dash!
-    // gpio_set_level(LED, estado);
 }
 
 void ledPWM()

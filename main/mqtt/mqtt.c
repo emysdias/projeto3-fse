@@ -33,13 +33,12 @@ extern SemaphoreHandle_t conexaoMQTTSemaphore;
 static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
 {
     esp_mqtt_client_handle_t client = event->client;
-    int msg_id;
 
     switch (event->event_id)
     {
     case MQTT_EVENT_CONNECTED:
         ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
-        msg_id = esp_mqtt_client_subscribe(client, "v1/devices/me/rpc/request/+", 0);
+        esp_mqtt_client_subscribe(client, "v1/devices/me/rpc/request/+", 0);
         if (!LOW_POWER)
             xSemaphoreGive(conexaoMQTTSemaphore);
         break;
