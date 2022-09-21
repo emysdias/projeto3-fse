@@ -1,8 +1,5 @@
-#include "include/wifi.h"
-#include "../light-sleep/include/light-sleep.h"
-#include "../mqtt/include/mqtt.h"
-
 #include <string.h>
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
@@ -12,9 +9,12 @@
 #include "esp_event.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
-
 #include "lwip/err.h"
 #include "lwip/sys.h"
+
+#include "include/wifi.h"
+#include "../light-sleep/include/light-sleep.h"
+#include "../mqtt/include/mqtt.h"
 
 #define WIFI_SSID CONFIG_ESP_WIFI_SSID
 #define WIFI_PASS CONFIG_ESP_WIFI_PASSWORD

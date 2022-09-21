@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <pthread.h>
 
+#include "esp_event.h"
+#include "freertos/semphr.h"
+
 #include "../wifi/include/wifi.h"
 #include "../gpio/include/led.h"
 #include "../mqtt/include/mqtt.h"
 #include "../dht11/include/sensor_read.h"
 #include "../ky-036/include/ky-036.h"
 #include "../ky-003/include/ky-003.h"
-
-#include "esp_event.h"
-#include "freertos/semphr.h"
 
 SemaphoreHandle_t conexaoWifiSemaphore;
 SemaphoreHandle_t conexaoMQTTSemaphore;

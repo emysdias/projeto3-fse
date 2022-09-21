@@ -1,9 +1,11 @@
 #include <stdio.h>
-#include "include/ky-036.h"
+
 #include "driver/gpio.h"
-#include "../mqtt/include/mqtt.h"
 #include "esp_event.h"
 #include "freertos/semphr.h"
+
+#include "../mqtt/include/mqtt.h"
+#include "include/ky-036.h"
 
 int touch = 0;
 

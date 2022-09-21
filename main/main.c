@@ -1,20 +1,7 @@
 #include <stdio.h>
-#include <pthread.h>
 
 #include "nvs_flash.h"
-#include "esp_wifi.h"
-#include "esp_event.h"
-#include "esp_http_client.h"
-#include "esp_log.h"
-#include "freertos/semphr.h"
-#include "driver/gpio.h"
 
-#include "wifi/include/wifi.h"
-#include "mqtt/include/mqtt.h"
-#include "gpio/include/led.h"
-#include "dht11/include/sensor_read.h"
-#include "ky-036/include/ky-036.h"
-#include "ky-003/include/ky-003.h"
 #include "light-sleep/include/light-sleep.h"
 #include "energy-mode/include/energy_mode.h"
 
